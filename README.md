@@ -60,7 +60,17 @@ Aplikasi ini telah dipublikasikan menggunakan **Expo EAS Update**. Anda dapat me
 
 1. Install **Expo Go** di HP Anda.
 2. Scan QR Code publik yang tersedia di dokumentasi pdf dokumentasi.
-![alt text](image.png)
+![alt text](image-1.png)
 3. Aplikasi akan otomatis terbuka di perangkat Anda.
+
+## 💡 Troubleshooting
+Jika Anda menemui error **"The connection appears to be offline"** atau HP tidak bisa connect saat scan QR code:
+
+1. **Gunakan Mode Tunnel**: Jika laptop dan HP di jaringan Wi-Fi berbeda (atau Wi-Fi publik), jalankan expo dengan flag tunnel:
+   ```bash
+   npx expo start --tunnel
+   ```
+2. **Wi-Fi yang Sama**: Pastikan Laptop dan HP di Wi-Fi yang sama.
+3. **Firewall**: Matikan Firewall Windows atau izinkan port `8081`.
 
 ---
