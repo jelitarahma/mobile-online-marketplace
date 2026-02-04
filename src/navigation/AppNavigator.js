@@ -21,6 +21,7 @@ import {
   AdminProductsScreen,
   AdminOrdersScreen,
   AdminCategoriesScreen,
+  AdminProductFormScreen,
   OrderDetailScreen,
 } from '../screens';
 
@@ -145,6 +146,11 @@ const ProfileStack = () => (
       name="AdminCategories" 
       component={AdminCategoriesScreen}
       options={{ title: 'Kelola Kategori' }}
+    />
+    <Stack.Screen 
+      name="AdminProductForm" 
+      component={AdminProductFormScreen}
+      options={({ route }) => ({ title: route.params?.productId ? 'Edit Produk' : 'Tambah Produk' })}
     />
     <Stack.Screen 
       name="OrderDetail" 

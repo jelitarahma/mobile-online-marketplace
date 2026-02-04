@@ -10,4 +10,5 @@ export { default as AdminDashboardScreen } from './AdminDashboardScreen';
 export { default as AdminProductsScreen } from './AdminProductsScreen';
 export { default as AdminOrdersScreen } from './AdminOrdersScreen';
 export { default as AdminCategoriesScreen } from './AdminCategoriesScreen';
+export { default as AdminProductFormScreen } from './AdminProductFormScreen';
 export { default as OrderDetailScreen } from './OrderDetailScreen';

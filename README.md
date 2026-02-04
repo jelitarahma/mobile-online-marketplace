@@ -60,7 +60,7 @@ Aplikasi ini telah dipublikasikan menggunakan **Expo EAS Update**. Anda dapat me
 
 1. Install **Expo Go** di HP Anda.
 2. Scan QR Code publik yang tersedia di dokumentasi pdf dokumentasi.
-![alt text](image-1.png)
+![alt text](image-2.png)
 3. Aplikasi akan otomatis terbuka di perangkat Anda.
 
 ## 💡 Troubleshooting

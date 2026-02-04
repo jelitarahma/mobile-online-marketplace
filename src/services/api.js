@@ -9,7 +9,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 detik timeout
+  timeout: 30000, // 30 detik timeout
 });
 
 // Listener mechanism for 401 errors

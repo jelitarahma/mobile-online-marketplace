@@ -118,7 +118,7 @@ const AdminProductsScreen = ({ navigation }) => {
         <View style={styles.actions}>
           <TouchableOpacity 
             style={[styles.actionButton, styles.editButton]}
-            onPress={() => Alert.alert('Info', 'Fitur edit produk akan tersedia di versi selanjutnya')}
+            onPress={() => navigation.navigate('AdminProductForm', { productId: item._id })}
           >
             <Ionicons name="pencil" size={16} color={COLORS.primary} />
             <Text style={styles.editButtonText}>Edit</Text>
@@ -184,6 +184,13 @@ const AdminProductsScreen = ({ navigation }) => {
           </View>
         }
       />
+
+      <TouchableOpacity 
+        style={styles.fab}
+        onPress={() => navigation.navigate('AdminProductForm')}
+      >
+        <Ionicons name="add" size={30} color={COLORS.white} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -314,6 +321,18 @@ const styles = StyleSheet.create({
     fontSize: FONTS.body,
     color: COLORS.textSecondary,
     marginTop: SPACING.md,
+  },
+  fab: {
+    position: 'absolute',
+    right: SPACING.lg,
+    bottom: SPACING.lg,
+    backgroundColor: COLORS.primary,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...SHADOWS.large,
   },
 });
 

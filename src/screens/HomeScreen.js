@@ -13,6 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
 import { COLORS, FONTS, SPACING, RADIUS, SHADOWS } from '../theme';
 
@@ -203,17 +204,28 @@ const HomeScreen = ({ navigation }) => {
         ListHeaderComponent={
           <>
             {/* Promo Banner */}
-            <View style={styles.promoBanner}>
-              <View style={styles.promoContent}>
-                <Text style={styles.promoTitle}>Don't miss out —</Text>
-                <Text style={styles.promoSubtitle}>
-                  Save up to 50% on your{'\n'}favorite products.
-                </Text>
-                <TouchableOpacity style={styles.promoButton}>
-                  <Text style={styles.promoButtonText}>Shop Now</Text>
-                </TouchableOpacity>
-              </View>
-              <Ionicons name="pricetag" size={48} color="rgba(255,255,255,0.3)" />
+            <View style={styles.promoBannerContainer}>
+              <LinearGradient
+                colors={['#630001', '#FFFFFF']}
+                start={{ x: 0, y: 0.5 }}
+                end={{ x: 1, y: 0.5 }}
+                style={styles.promoBanner}
+              >
+                <View style={styles.promoContent}>
+                  <Text style={styles.promoTitle}>Lunar New Year Sale</Text>
+                  <Text style={styles.promoSubtitle}>
+                    Save up to 50% on your{"\n"}favorite products.
+                  </Text>
+                  <TouchableOpacity style={styles.promoButton}>
+                    <Text style={styles.promoButtonText}>Shop Now</Text>
+                  </TouchableOpacity>
+                </View>
+              </LinearGradient>
+              <Image 
+                source={require('../../assets/images/cny.png')}
+                style={styles.promoImage}
+                resizeMode="contain"
+              />
             </View>
 
             {/* Categories */}
@@ -300,41 +312,57 @@ const styles = StyleSheet.create({
   },
 
   // Promo Banner
-  promoBanner: {
-    flexDirection: 'row',
-    backgroundColor: COLORS.primary,
+  promoBannerContainer: {
+    position: 'relative',
     margin: SPACING.md,
     marginTop: 0,
+    marginBottom: SPACING.lg + 20,
+  },
+  promoBanner: {
+    flexDirection: 'row',
     borderRadius: RADIUS.lg,
     padding: SPACING.lg,
     alignItems: 'center',
+    height: 160,
+    ...SHADOWS.medium,
+    marginTop: 20,
   },
   promoContent: {
     flex: 1,
+    zIndex: 1,
   },
   promoTitle: {
     color: COLORS.white,
-    fontSize: FONTS.body,
-    fontWeight: '600',
+    fontSize: FONTS.h4,
+    fontWeight: '700',
     marginBottom: SPACING.xs,
   },
   promoSubtitle: {
-    color: 'rgba(255,255,255,0.9)',
-    fontSize: FONTS.small,
+    color: '#ffffffff',
+    fontSize: FONTS.tiny,
     lineHeight: 20,
     marginBottom: SPACING.md,
+    fontWeight: '500',
   },
   promoButton: {
-    backgroundColor: COLORS.white,
+    backgroundColor: '#630001',
     paddingHorizontal: SPACING.md,
     paddingVertical: SPACING.sm,
     borderRadius: RADIUS.sm,
     alignSelf: 'flex-start',
   },
   promoButtonText: {
-    color: COLORS.primary,
+    color: COLORS.white,
     fontWeight: '600',
     fontSize: FONTS.small,
+  },
+  promoImage: {
+    position: 'absolute',
+    right: -15,
+    bottom: 0,
+    width: '60%',
+    height: '120%',
+    zIndex: 2,
   },
 
   // Categories

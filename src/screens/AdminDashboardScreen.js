@@ -84,27 +84,30 @@ const AdminDashboardScreen = () => {
         <StatCard
           icon="wallet-outline"
           iconColor={COLORS.accent}
-          title="Total Revenue"
-          value={formatCurrency(stats?.totalRevenue || 0)}
-          subtitle={`${stats?.totalOrders || 0} pesanan`}
+          title="Total Pendapatan"
+          value={formatCurrency(stats?.summary?.totalSales?.allTime || 0)}
+          subtitle={`${stats?.summary?.totalSales?.percentageChange || 0}% dari bulan lalu`}
         />
         <StatCard
           icon="cube-outline"
           iconColor={COLORS.primary}
-          title="Total Produk"
-          value={stats?.totalProducts || 0}
+          title="Produk Terjual"
+          value={stats?.summary?.totalProductsSold?.current || 0}
+          subtitle="Bulan ini"
         />
         <StatCard
           icon="people-outline"
           iconColor={COLORS.secondary}
-          title="Total Users"
-          value={stats?.totalUsers || 0}
+          title="Total Pelanggan"
+          value={stats?.summary?.totalCustomers || 0}
+          subtitle={`${stats?.summary?.newCustomersThisMonth || 0} baru bulan ini`}
         />
         <StatCard
           icon="time-outline"
           iconColor={COLORS.warning}
           title="Pesanan Pending"
-          value={stats?.pendingOrders || 0}
+          value={stats?.summary?.pendingOrders || 0}
+          subtitle="Harus diproses"
         />
       </View>
 
@@ -117,12 +120,12 @@ const AdminDashboardScreen = () => {
               <View style={styles.orderInfo}>
                 <Text style={styles.orderNumber}>{order.order_number}</Text>
                 <Text style={styles.orderDate}>
-                  {new Date(order.createdAt).toLocaleDateString('id-ID')}
+                  {order.customer} • {new Date(order.date).toLocaleDateString('id-ID')}
                 </Text>
               </View>
               <View style={styles.orderRight}>
                 <Text style={styles.orderAmount}>
-                  {formatCurrency(order.total_amount)}
+                  {formatCurrency(order.total)}
                 </Text>
                 <View style={[
                   styles.statusBadge,

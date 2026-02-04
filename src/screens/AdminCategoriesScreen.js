@@ -21,6 +21,7 @@ const AdminCategoriesScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [adding, setAdding] = useState(false);
+  const [editingCategory, setEditingCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
   const fetchCategories = async () => {
@@ -54,15 +55,31 @@ const AdminCategoriesScreen = () => {
 
     setAdding(true);
     try {
-      await api.post('/categories', { name: newCategoryName.trim() });
-      Alert.alert('Berhasil', 'Kategori berhasil ditambahkan');
+      if (editingCategory) {
+        await api.put(`/categories/${editingCategory._id}`, { name: newCategoryName.trim() });
+        Alert.alert('Berhasil', 'Kategori berhasil diperbarui');
+      } else {
+        await api.post('/categories', { name: newCategoryName.trim() });
+        Alert.alert('Berhasil', 'Kategori berhasil ditambahkan');
+      }
       setNewCategoryName('');
+      setEditingCategory(null);
       fetchCategories();
     } catch (error) {
-      Alert.alert('Error', error.response?.data?.message || 'Gagal menambahkan kategori');
+      Alert.alert('Error', error.response?.data?.message || 'Gagal menyimpan kategori');
     } finally {
       setAdding(false);
     }
+  };
+
+  const handleEditCategory = (category) => {
+    setEditingCategory(category);
+    setNewCategoryName(category.name);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingCategory(null);
+    setNewCategoryName('');
   };
 
   const handleDeleteCategory = (category) => {
@@ -103,12 +120,20 @@ const AdminCategoriesScreen = () => {
           )}
         </View>
       </View>
-      <TouchableOpacity 
-        style={styles.deleteButton}
-        onPress={() => handleDeleteCategory(item)}
-      >
-        <Ionicons name="trash-outline" size={20} color={COLORS.error} />
-      </TouchableOpacity>
+      <View style={styles.categoryActions}>
+        <TouchableOpacity 
+          style={styles.editButton}
+          onPress={() => handleEditCategory(item)}
+        >
+          <Ionicons name="pencil-outline" size={20} color={COLORS.primary} />
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.deleteButton}
+          onPress={() => handleDeleteCategory(item)}
+        >
+          <Ionicons name="trash-outline" size={20} color={COLORS.error} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -145,7 +170,7 @@ const AdminCategoriesScreen = () => {
       <View style={styles.addForm}>
         <TextInput
           style={styles.addInput}
-          placeholder="Nama kategori baru"
+          placeholder={editingCategory ? "Edit nama kategori" : "Nama kategori baru"}
           placeholderTextColor={COLORS.textLight}
           value={newCategoryName}
           onChangeText={setNewCategoryName}
@@ -160,11 +185,20 @@ const AdminCategoriesScreen = () => {
             <ActivityIndicator color={COLORS.white} size="small" />
           ) : (
             <>
-              <Ionicons name="add" size={20} color={COLORS.white} />
-              <Text style={styles.addButtonText}>Tambah</Text>
+              <Ionicons name={editingCategory ? "save-outline" : "add"} size={20} color={COLORS.white} />
+              <Text style={styles.addButtonText}>{editingCategory ? "Simpan" : "Tambah"}</Text>
             </>
           )}
         </TouchableOpacity>
+        {editingCategory && (
+          <TouchableOpacity 
+            style={styles.cancelButton}
+            onPress={handleCancelEdit}
+            disabled={adding}
+          >
+            <Ionicons name="close" size={24} color={COLORS.textSecondary} />
+          </TouchableOpacity>
+        )}
       </View>
 
       <Text style={styles.resultCount}>{filteredCategories.length} kategori</Text>
@@ -297,8 +331,20 @@ const styles = StyleSheet.create({
     color: COLORS.textSecondary,
     marginTop: SPACING.xs,
   },
+  categoryActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  editButton: {
+    padding: SPACING.sm,
+  },
   deleteButton: {
     padding: SPACING.sm,
+  },
+  cancelButton: {
+    padding: SPACING.sm,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   emptyContainer: {
     alignItems: 'center',

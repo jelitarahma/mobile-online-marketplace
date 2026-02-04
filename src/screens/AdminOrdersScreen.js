@@ -24,7 +24,8 @@ const AdminOrdersScreen = ({ navigation }) => {
   const fetchOrders = async () => {
     try {
       const response = await api.get('/orders/admin/all');
-      setOrders(response.data || []);
+      const ordersData = response.data?.orders || (Array.isArray(response.data) ? response.data : []);
+      setOrders(ordersData);
     } catch (error) {
       console.log('Error fetching orders:', error);
     } finally {
